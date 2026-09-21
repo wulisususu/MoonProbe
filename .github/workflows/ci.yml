@@ -68,3 +68,39 @@ jobs:
       - name: Build playground bridge
         if: runner.os == 'Linux'
         run: moon build playground_bridge --target js
+
+      - name: Smoke playground bridge exports
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          BRIDGE="$(find target/js -type f -name '*.js' | grep 'playground_bridge' | head -n 1)"
+          test -n "$BRIDGE"
+          cp "$BRIDGE" /tmp/moonprobe_bridge.mjs
+          node --input-type=module <<'NODE'
+          const bridge = await import("file:///tmp/moonprobe_bridge.mjs");
+          const request = JSON.stringify({
+            name: "Smoke",
+            method: "GET",
+            url: "{{base_url}}/todos/1",
+            assertions: [
+              { type: "status_is", expected: 200 },
+              { type: "json_equals", path: "$.id", expected: 1 }
+            ]
+          });
+          const env = JSON.stringify({ base_url: "https://example.test" });
+          const prepared = JSON.parse(bridge.prepare_request_json(request, env));
+          if (!prepared.ok || prepared.request.url !== "https://example.test/todos/1") {
+            throw new Error("prepare_request_json bridge smoke failed");
+          }
+          const response = JSON.stringify({
+            status: 200,
+            headers: [{ name: "content-type", value: "application/json" }],
+            body: "{\"id\":1}",
+            duration_ms: 12
+          });
+          const report = JSON.parse(bridge.evaluate_response_report_json(request, response));
+          if (!report.passed || report.requests?.[0]?.assertions?.length !== 2) {
+            throw new Error("evaluate_response_report_json bridge smoke failed");
+          }
+          console.log("playground bridge smoke: ok");
+          NODE
