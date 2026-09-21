@@ -6,101 +6,128 @@
 
 ## 项目定位
 
-MoonProbe 是一个以 MoonBit 为主要实现语言的 API 调试与自动化测试工具。用户可以像使用常见 API 调试软件一样输入 URL、选择 HTTP 方法、配置参数并发送请求；同时，MoonProbe 将请求模型、环境变量、模板替换、响应断言、Collection 执行和测试报告实现为可复用的 MoonBit 核心能力。
+MoonProbe 是一个以 MoonBit 为主要实现语言的 API 调试与自动化测试工具。它把 Request / Response、Environment、Template、Assertion、Collection Runner 与 Report 做成可复用的 MoonBit 核心能力，并在其上提供 Native CLI 和 Web Playground 两个适配层。
 
-项目不以“复刻完整 Postman”为目标，而聚焦于一个边界清晰的问题：
+项目不以复刻完整 Postman 为目标，而聚焦于一个边界清晰的问题：
 
-> **让开发者能够用一套 MoonBit 原生核心，完成 API 的手动调试、批量回归测试和机器可读验证。**
+> **用一套 MoonBit 原生模型与验证逻辑，完成 API 手动调试、批量回归测试和机器可读验证。**
 
 ## 真实需求
 
-AI 编程显著降低了后端接口的生成成本，但接口生成后仍然需要验证：
+AI 编程显著降低了接口生成成本，但“代码生成完成”不等于“接口行为正确”。开发者仍需要确认：
 
-- 请求是否能够成功发送；
-- 状态码是否符合预期；
-- JSON 字段是否存在或等于预期值；
-- 多个接口串联后是否仍然正常；
-- 修改代码后旧接口是否发生回归。
+- 请求是否能真实发送；
+- 状态码、Header 和 JSON 字段是否符合预期；
+- 多接口修改后是否产生回归；
+- timeout / transport error 是否被明确表达；
+- 同一套验证能否在 CLI、CI 与可视化 Demo 中复用。
 
-传统做法往往在 GUI 工具、脚本和 CI 之间分散。MoonProbe 希望提供统一的请求与断言模型，使同一个 Collection 能被交互式 Demo、CLI、CI，甚至 AI Coding Agent 调用。
+MoonProbe 将这些判断集中到结构化 Request / Assertion / Result 模型中，避免 GUI、脚本和 CI 各自维护一套规则。
 
-## 主要功能
+## 当前已实现能力
 
-首版计划实现：
+v0.1 已实现：
 
-1. GET / POST / PUT / PATCH / DELETE；
-2. Query Params、Headers、JSON/Text Body；
+1. GET / POST / PUT / PATCH / DELETE / HEAD / OPTIONS；
+2. Query Params、Headers、JSON / Text Body；
 3. Bearer Token 与 Basic Auth；
 4. Response status / headers / body / timing；
-5. `{{variable}}` 环境变量；
-6. Collection；
-7. 状态码、Header、JSON 字段、响应时间等断言；
-8. Collection Runner；
-9. Text / JSON 报告；
-10. CLI 与 Web Playground。
+5. `{{variable}}` Environment 与模板展开；
+6. status / header / body / JSON / response-time Assertions；
+7. Collection 与顺序 Runner；
+8. continue-on-failure / stop-on-failure；
+9. Text / versioned JSON Report；
+10. Native HTTP Transport；
+11. Native CLI：`send` / `run` / `--env` / `--format`；
+12. MoonBit-backed Web Playground；
+13. Linux / Windows Native CI；
+14. JavaScript target Bridge 与 Node ABI 冒烟测试。
 
 ## 技术结构
 
-```text
-                 MoonProbe Core
-                       │
-     ┌─────────────────┼─────────────────┐
-     │                 │                 │
-   Request          Assertion        Collection
-   Model             Engine           Runner
-     │                 │                 │
-     └─────────────────┼─────────────────┘
-                       │
-                    Report
-                       │
-              ┌────────┴────────┐
-              │                 │
-             CLI          Web Playground
-```
+~~~text
+                         MoonProbe Core
+                              │
+          ┌───────────────────┼───────────────────┐
+          ▼                   ▼                   ▼
+   Request/Environment    Assertion Engine   Collection Runner
+          │                   │                   │
+          └───────────────────┼───────────────────┘
+                              ▼
+                       CollectionResult
+                              │
+                         Text/JSON Report
+                              │
+               ┌──────────────┴──────────────┐
+               ▼                             ▼
+          Native CLI                 Web Playground
+               │                             │
+       HttpTransport                  Browser fetch
+                                             │
+                                  MoonBit JS Bridge
+~~~
 
-Web 界面只是参考应用；删除 Web 后，MoonProbe Core 仍然必须能够独立使用、测试和复用。
+CLI 与 Playground 共用 `wire/` JSON parser。Web 不复制模板、断言和报告算法；浏览器只承担 CORS 约束下的网络 IO 和界面编排。
 
-## MoonBit 价值
+## MoonBit 在项目中的角色
 
-MoonBit 将主要承担：
+MoonBit 实现：
 
-- 强类型请求/响应模型；
-- 环境变量与模板展开；
+- Request / Response / Environment 等公共模型；
+- 模板展开；
 - Assertion Engine；
 - Collection Runner；
-- 结构化报告；
-- CLI 核心逻辑；
-- 测试与可复用公共 API。
+- Text / JSON Reporter；
+- Native HTTP Transport；
+- CLI 输入与执行协调；
+- CLI / Playground 共用 wire parser；
+- JavaScript foreign-library Bridge；
+- 单元、集成与回归测试。
 
-项目会尽量保持核心逻辑与 UI 解耦，并以可测试、确定性的 API 为第一优先级。
+当前 Git tree 中 `.mbt` 源码约 83.7 KB，而 `.js + .html + .css` 合计约 20.4 KB。该数字只用于说明 MoonBit 是主要源码实现，不作为项目价值评分依据。
 
 ## Demo
 
-Demo 第一屏使用熟悉的 API Workbench 结构：
+Playground 第一屏就是工具本体：
 
-```text
-Collections | Request Builder | Response
-            | Params          | 200 OK
-            | Headers         | JSON
-            | Body            |
------------------------------------------
-Tests: ✓ status == 200  ✓ body.id exists
-```
+~~~text
+Collections | Method + URL + Send | Response
+            | Body/Headers/Params | status / body / timing
+-----------------------------------------------------------
+Assertions: ✓ status_is   ✓ json_exists
+~~~
 
-同时提供预置 Todo API Collection，评委可直接点击 **Run Collection**，看到多个请求依次执行以及断言通过/失败结果。
+内置 Todo API 场景包含 Create / List / Get / Update / Delete，可单独 Send，也可一键按顺序运行。
 
-## 验收目标
+浏览器版明确遵守 CORS；任意网络访问由 Native CLI 承担。
 
-- MoonBit 为主要实现语言；
-- 公共仓库持续提交；
-- README 与完整设计文档；
-- 可运行示例；
-- 自动化测试；
-- CI；
-- Apache-2.0 许可证；
-- 可复现 Demo；
-- 项目完成后发布 MoonBit package（条件允许时发布至 Mooncakes）。
+## 工程验证
+
+当前主路径包括：
+
+- strict `moon check --deny-warn`；
+- MoonBit 单元与回归测试；
+- Ubuntu / Windows Native build；
+- loopback HTTP integration tests；
+- JS target check/build；
+- 生成 ESM 的 Node 动态导入；
+- Bridge 导出函数真实调用；
+- Playground JavaScript module 语法检查。
+
+## 开源与合规
+
+- Apache-2.0；
+- GitHub 公共仓库与完整开发历史；
+- Issues / PR / CHANGELOG 保留开发过程；
+- 直接 MoonBit 依赖许可证已审查；
+- GitHub Actions 许可证已审查；
+- 示例凭据只使用占位符；
+- AI 使用与关键架构决策有独立说明。
+
+详见 [THIRD_PARTY.md](THIRD_PARTY.md)、[AI_USAGE.md](AI_USAGE.md) 与 [DEVELOPMENT_RETROSPECTIVE.md](DEVELOPMENT_RETROSPECTIVE.md)。
 
 ## 项目边界
 
-首版不实现 OAuth 全流程、gRPC、WebSocket、云同步、账号系统、多人协作或插件市场。目标是在有限时间内完成一个可运行、可测试、可维护的 API 测试核心与清晰 Demo。
+v0.1 不实现 OAuth 全流程、gRPC、WebSocket、云同步、账号系统、多人协作、插件市场、完整 Postman Collection 兼容或负载测试。
+
+目标是在九月赛周期内完成一个可运行、可测试、可维护、可解释的 MoonBit API 测试核心与清晰 Demo。

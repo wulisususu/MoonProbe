@@ -141,12 +141,23 @@ Auth：
 
 ## Environment JSON
 
-Environment 是简单字符串字典：
+Environment 是简单字符串字典。仓库提供两个示例：
+
+`examples/env/public-demo.json` 可直接用于公开演示：
+
+```json
+{
+  "base_url": "https://jsonplaceholder.typicode.com",
+  "token": "moonprobe-public-demo"
+}
+```
+
+`examples/env/dev.json` 则作为自有 API 配置模板：
 
 ```json
 {
   "base_url": "https://api.example.com",
-  "token": "demo-token"
+  "token": "replace-me"
 }
 ```
 

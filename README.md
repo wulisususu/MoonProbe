@@ -5,7 +5,7 @@
 
 MoonProbe 的目标很简单：让开发者像使用常见 API 调试工具一样，输入 URL、选择方法、填写参数并发送请求；同时把 **Request Model、Environment、Template、Assertion、Collection Runner、Report** 做成可复用的 MoonBit 核心能力。
 
-> 当前状态：**Gate 1–6 已完成**。Core、Native Transport、Collection Runner、Text/JSON Report、Native CLI 与 MoonBit-backed Web Playground 均已实现；Native 走 Linux / Windows CI，Playground Bridge 额外通过 JS target 与 Node ABI 冒烟测试。下一阶段进入提交前验收。
+> 当前状态：**Gate 1–6 已完成，Gate 7 提交前验收进行中**。Core、Native Transport、Collection Runner、Text/JSON Report、Native CLI 与 MoonBit-backed Web Playground 均已实现；Native 走 Linux / Windows CI，Playground Bridge 额外通过 JS target 与 Node ABI 冒烟测试。
 
 ## 一句话说明
 
@@ -48,7 +48,7 @@ Developer / Agent fixes the API
 
 ## 产品形态
 
-最终 Demo 的第一屏会非常直接：
+当前 Playground 第一屏直接展示：
 
 ```text
 ┌───────────────┬───────────────────────────────┬───────────────┐
@@ -67,7 +67,7 @@ Developer / Agent fixes the API
 
 ## MoonBit Core
 
-计划中的公共核心模块：
+当前公共核心能力：
 
 ```text
 core/
@@ -184,6 +184,8 @@ MoonProbe/
 │  ├─ TEST_PLAN.md
 │  ├─ DEMO_PLAN.md
 │  ├─ AI_USAGE.md
+│  ├─ DEVELOPMENT_RETROSPECTIVE.md
+│  ├─ THIRD_PARTY.md
 │  └─ COMPETITION_CHECKLIST.md
 ├─ CONTRIBUTING.md
 ├─ CHANGELOG.md
@@ -214,7 +216,7 @@ moon run cmd/moonprobe -- --version
 
 ```bash
 moon run cmd/moonprobe -- send examples/requests/get-user.json \
-  --env examples/env/dev.json \
+  --env examples/env/public-demo.json \
   --format text
 ```
 
@@ -222,11 +224,11 @@ moon run cmd/moonprobe -- send examples/requests/get-user.json \
 
 ```bash
 moon run cmd/moonprobe -- run examples/collections/todo-api.json \
-  --env examples/env/dev.json \
+  --env examples/env/public-demo.json \
   --format json
 ```
 
-示例中的 `base_url` / token 是模板值；实际执行前请在 `examples/env/dev.json` 中替换为你自己的测试 API。
+`examples/env/public-demo.json` 默认指向 JSONPlaceholder，可直接用于公开演示；测试你自己的 API 时可复制 `examples/env/dev.json` 并替换 `base_url` / token。
 
 CLI 退出码：
 
@@ -263,7 +265,7 @@ Playground 提供：
 
 默认 Demo API 使用 CORS-friendly 的 JSONPlaceholder。浏览器仍受 CORS 限制；真正的任意网络访问由 Native CLI 承担。
 
-GitHub Pages 在 `main` 上由 `.github/workflows/pages.yml` 自动构建 MoonBit JS Bridge 后部署。
+GitHub Pages workflow 已在 `main` 上配置，会自动构建 MoonBit JS Bridge 并 stage Playground。仓库首次上线仍需一次性在 Settings → Pages 中把 Source 设为 GitHub Actions。
 
 ## 赛事
 
@@ -291,9 +293,12 @@ MoonProbe 计划参加 **2026 MoonBit 黑客松 · 九月赛**。
 - [公共 API 设计](docs/API_DESIGN.md)
 - [开发计划](docs/DEVELOPMENT_PLAN.md)
 - [测试计划](docs/TEST_PLAN.md)
+- [60 秒评委快速验证](docs/REVIEWER_GUIDE.md)
 - [CLI 使用与 JSON 格式](docs/CLI.md)
 - [Demo 设计](docs/DEMO_PLAN.md)
 - [AI 使用说明](docs/AI_USAGE.md)
+- [开发复盘](docs/DEVELOPMENT_RETROSPECTIVE.md)
+- [第三方依赖与许可证](docs/THIRD_PARTY.md)
 - [赛事验收清单](docs/COMPETITION_CHECKLIST.md)
 - [贡献指南](CONTRIBUTING.md)
 - [变更记录](CHANGELOG.md)
