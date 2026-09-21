@@ -17,7 +17,7 @@ async fn load_environment(path : String?) -> Result[@core.Environment, String] {
         Ok(content) => content
         Err(message) => return Err(message)
       }
-      parse_environment_document(text, value)
+      @wire.parse_environment_document(text, value)
     }
   }
 }
@@ -47,7 +47,7 @@ pub async fn execute(config : CliConfig) -> Result[CliOutcome, String] {
         Ok(value) => value
         Err(message) => return Err(message)
       }
-      let request = match parse_request_document(text, path) {
+      let request = match @wire.parse_request_document(text, path) {
         Ok(value) => value
         Err(message) => return Err(message)
       }
@@ -74,7 +74,7 @@ pub async fn execute(config : CliConfig) -> Result[CliOutcome, String] {
         Ok(value) => value
         Err(message) => return Err(message)
       }
-      let collection = match parse_collection_document(text, path) {
+      let collection = match @wire.parse_collection_document(text, path) {
         Ok(value) => value
         Err(message) => return Err(message)
       }
