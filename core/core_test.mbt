@@ -15,7 +15,7 @@ test "new request has deterministic empty defaults" {
     "https://api.example.com/users/1",
   )
   assert_eq(req.name, "Get user")
-  assert_eq(req.method, @core.GET)
+  assert_eq(req.http_method, @core.GET)
   assert_eq(req.url, "https://api.example.com/users/1")
   assert_eq(req.headers.length(), 0)
   assert_eq(req.query.length(), 0)
