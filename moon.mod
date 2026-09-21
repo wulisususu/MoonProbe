@@ -14,4 +14,7 @@ description = "MoonBit-native API debugging, collection running, and automated a
 
 import {
   "moonbitlang/async@0.22.1",
+  "moonbitlang/x@0.4.50",
 }
+
+preferred_target = "native"

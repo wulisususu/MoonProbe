@@ -1,0 +1,18 @@
+{
+  "name": "Get user",
+  "method": "GET",
+  "url": "{{base_url}}/users/1",
+  "headers": [
+    { "name": "Accept", "value": "application/json" }
+  ],
+  "query": [],
+  "auth": {
+    "type": "bearer",
+    "token": "{{token}}"
+  },
+  "timeout_ms": 5000,
+  "assertions": [
+    { "type": "status_is", "expected": 200 },
+    { "type": "json_exists", "path": "$.id" }
+  ]
+}
