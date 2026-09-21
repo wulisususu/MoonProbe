@@ -10,10 +10,13 @@ pub(all) enum Method {
   OPTIONS
 } derive(Eq, @debug.Debug)
 
+pub extend Method with Eq::{not_equal, equal}
+pub extend Method with @debug.Debug::{to_repr}
+
 ///|
 /// Convert a Method to the canonical HTTP token.
-pub fn method_to_string(method : Method) -> String {
-  match method {
+pub fn method_to_string(http_method : Method) -> String {
+  match http_method {
     GET => "GET"
     POST => "POST"
     PUT => "PUT"
@@ -31,12 +34,18 @@ pub(all) struct Header {
   value : String
 } derive(Eq, @debug.Debug)
 
+pub extend Header with Eq::{not_equal, equal}
+pub extend Header with @debug.Debug::{to_repr}
+
 ///|
 /// A single URL query parameter.
 pub(all) struct QueryParam {
   name : String
   value : String
 } derive(Eq, @debug.Debug)
+
+pub extend QueryParam with Eq::{not_equal, equal}
+pub extend QueryParam with @debug.Debug::{to_repr}
 
 ///|
 /// Request body representation for the first MoonProbe release.
@@ -49,6 +58,9 @@ pub(all) enum Body {
   Json(String)
 } derive(Eq, @debug.Debug)
 
+pub extend Body with Eq::{not_equal, equal}
+pub extend Body with @debug.Debug::{to_repr}
+
 ///|
 /// Authentication configuration supported by the MVP.
 pub(all) enum Auth {
@@ -57,11 +69,14 @@ pub(all) enum Auth {
   Basic(String, String)
 } derive(Eq, @debug.Debug)
 
+pub extend Auth with Eq::{not_equal, equal}
+pub extend Auth with @debug.Debug::{to_repr}
+
 ///|
 /// A transport-neutral HTTP request description.
 pub(all) struct Request {
   name : String
-  method : Method
+  http_method : Method
   url : String
   headers : Array[Header]
   query : Array[QueryParam]
@@ -69,12 +84,19 @@ pub(all) struct Request {
   auth : Auth
 } derive(Eq, @debug.Debug)
 
+pub extend Request with Eq::{not_equal, equal}
+pub extend Request with @debug.Debug::{to_repr}
+
 ///|
 /// Build a minimal request with empty headers/query/body and no auth.
-pub fn new_request(name : String, method : Method, url : String) -> Request {
+pub fn new_request(
+  name : String,
+  http_method : Method,
+  url : String,
+) -> Request {
   {
     name,
-    method,
+    http_method,
     url,
     headers: [],
     query: [],
@@ -94,6 +116,9 @@ pub(all) struct Response {
   body : String
   duration_ms : Int
 } derive(Eq, @debug.Debug)
+
+pub extend Response with Eq::{not_equal, equal}
+pub extend Response with @debug.Debug::{to_repr}
 
 ///|
 /// Build a response value, primarily useful to transports and tests.
