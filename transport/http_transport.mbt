@@ -3,17 +3,19 @@
 ///
 /// The type contains no mutable connection state: each execute call owns its
 /// request lifecycle, which keeps behavior deterministic for the MVP.
-pub struct HttpTransport {}
+pub struct HttpTransport {
+  priv marker : Unit
+}
 
 ///|
 /// Construct the default HTTP transport.
 pub fn HttpTransport::new() -> HttpTransport {
-  {}
+  { marker: (), }
 }
 
 ///|
-fn request_method(method : @core.Method) -> @http.RequestMethod {
-  match method {
+fn request_method(http_method : @core.Method) -> @http.RequestMethod {
+  match http_method {
     GET => @http.Get
     POST => @http.Post
     PUT => @http.Put
@@ -158,7 +160,7 @@ async fn execute_http(
 }
 
 ///|
-pub impl @core.Transport for HttpTransport with async fn execute(
+pub impl @core.Transport for HttpTransport with fn execute(
   _self,
   request,
   timeout_ms,
