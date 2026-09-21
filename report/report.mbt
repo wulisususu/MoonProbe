@@ -1,6 +1,6 @@
 ///|
 /// Stable schema identifier for machine-readable Collection reports.
-pub let COLLECTION_REPORT_SCHEMA : String = "moonprobe.collection-report.v1"
+pub const COLLECTION_REPORT_SCHEMA : String = "moonprobe.collection-report.v1"
 
 ///|
 fn error_message(error : @core.ProbeError) -> String {
