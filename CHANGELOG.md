@@ -117,4 +117,15 @@ Gate 5 is complete.
 - Added GitHub Pages workflow that compiles the MoonBit JS Bridge and stages it with the static playground.
 - Added JS target check/build to CI and syntax validation for the browser module.
 
-Gate 6 is complete. Gate 7 is submission hardening and final verification.
+Gate 6 is complete.
+
+#### Submission hardening
+
+- Added a development retrospective covering architecture decisions, AI-assisted workflow, testing strategy and corrected assumptions.
+- Added direct dependency / GitHub Actions license review and credential-review notes.
+- Aligned the one-page proposal and competition checklist with the implemented v0.1 scope.
+- Added a zero-configuration public demo environment backed by JSONPlaceholder for CLI review.
+- Added a 60-second reviewer quickstart.
+- Updated README examples so reviewers can execute the public demo without editing configuration first.
+
+Gate 7 is in final verification.
