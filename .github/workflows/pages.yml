@@ -35,7 +35,7 @@ jobs:
       - name: Stage bridge
         shell: bash
         run: |
-          BRIDGE="$(find target/js -type f -name '*.js' | grep 'playground_bridge' | head -n 1)"
+          BRIDGE="$(find _build/js -type f -name '*.js' | grep 'playground_bridge' | head -n 1)"
           test -n "$BRIDGE"
           cp "$BRIDGE" playground/moonprobe_bridge.js
 
