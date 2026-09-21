@@ -293,6 +293,8 @@ MoonProbe 计划参加 **2026 MoonBit 黑客松 · 九月赛**。
 - [公共 API 设计](docs/API_DESIGN.md)
 - [开发计划](docs/DEVELOPMENT_PLAN.md)
 - [测试计划](docs/TEST_PLAN.md)
+- [最终报名 / 验收提交包](docs/FINAL_SUBMISSION_PACKET.md)
+- [3 分钟评委演示脚本](docs/DEMO_SCRIPT.md)
 - [60 秒评委快速验证](docs/REVIEWER_GUIDE.md)
 - [CLI 使用与 JSON 格式](docs/CLI.md)
 - [Demo 设计](docs/DEMO_PLAN.md)
