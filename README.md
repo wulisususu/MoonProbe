@@ -216,7 +216,7 @@ moon run cmd/moonprobe -- --version
 
 ```bash
 moon run cmd/moonprobe -- send examples/requests/get-user.json \
-  --env examples/env/dev.json \
+  --env examples/env/public-demo.json \
   --format text
 ```
 
@@ -224,11 +224,11 @@ moon run cmd/moonprobe -- send examples/requests/get-user.json \
 
 ```bash
 moon run cmd/moonprobe -- run examples/collections/todo-api.json \
-  --env examples/env/dev.json \
+  --env examples/env/public-demo.json \
   --format json
 ```
 
-示例中的 `base_url` / token 是模板值；实际执行前请在 `examples/env/dev.json` 中替换为你自己的测试 API。
+`examples/env/public-demo.json` 默认指向 JSONPlaceholder，可直接用于公开演示；测试你自己的 API 时可复制 `examples/env/dev.json` 并替换 `base_url` / token。
 
 CLI 退出码：
 
@@ -293,6 +293,7 @@ MoonProbe 计划参加 **2026 MoonBit 黑客松 · 九月赛**。
 - [公共 API 设计](docs/API_DESIGN.md)
 - [开发计划](docs/DEVELOPMENT_PLAN.md)
 - [测试计划](docs/TEST_PLAN.md)
+- [60 秒评委快速验证](docs/REVIEWER_GUIDE.md)
 - [CLI 使用与 JSON 格式](docs/CLI.md)
 - [Demo 设计](docs/DEMO_PLAN.md)
 - [AI 使用说明](docs/AI_USAGE.md)
