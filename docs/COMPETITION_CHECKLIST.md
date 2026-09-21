@@ -137,6 +137,8 @@ MoonBit 是主要源码实现语言；该统计仅作证据，不作为质量评
 - [ ] Release / tag
 - [ ] Mooncakes 发布（条件允许时）
 - [ ] 加入赛事交流群
+- [x] 报名 / 验收可复制文本已整理：`docs/FINAL_SUBMISSION_PACKET.md`
+- [x] 3 分钟演示脚本已整理：`docs/DEMO_SCRIPT.md`
 - [ ] 根据官方报名入口提交参赛信息
 
 ## GitHub Pages 当前状态
