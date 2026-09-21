@@ -73,7 +73,7 @@ jobs:
         if: runner.os == 'Linux'
         shell: bash
         run: |
-          BRIDGE="$(find target/js -type f -name '*.js' | grep 'playground_bridge' | head -n 1)"
+          BRIDGE="$(find _build/js -type f -name '*.js' | grep 'playground_bridge' | head -n 1)"
           test -n "$BRIDGE"
           cp "$BRIDGE" /tmp/moonprobe_bridge.mjs
           node --input-type=module <<'NODE'
