@@ -61,6 +61,10 @@ jobs:
       - name: Build
         run: moon build --target native
 
+      - name: Validate publish package contents
+        if: runner.os == 'Linux'
+        run: moon package --list
+
       - name: Check playground bridge
         if: runner.os == 'Linux'
         run: moon check playground_bridge --target js --deny-warn
