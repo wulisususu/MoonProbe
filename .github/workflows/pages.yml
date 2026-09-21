@@ -1,0 +1,57 @@
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install MoonBit
+        shell: bash
+        run: |
+          curl --retry 3 --retry-all-errors --retry-delay 3 -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve dependencies
+        run: moon update
+
+      - name: Build MoonBit playground bridge
+        run: moon build playground_bridge --target js
+
+      - name: Stage bridge
+        shell: bash
+        run: |
+          BRIDGE="$(find target/js -type f -name '*.js' | grep 'playground_bridge' | head -n 1)"
+          test -n "$BRIDGE"
+          cp "$BRIDGE" playground/moonprobe_bridge.js
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: playground
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
