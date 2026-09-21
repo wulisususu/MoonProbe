@@ -5,6 +5,9 @@ pub(all) struct Variable {
   value : String
 } derive(Eq, @debug.Debug)
 
+pub extend Variable with Eq::{not_equal, equal}
+pub extend Variable with @debug.Debug::{to_repr}
+
 ///|
 /// An explicit environment rather than an implicit process-global map.
 ///
@@ -13,6 +16,9 @@ pub(all) struct Variable {
 pub(all) struct Environment {
   values : Array[Variable]
 } derive(Eq, @debug.Debug)
+
+pub extend Environment with Eq::{not_equal, equal}
+pub extend Environment with @debug.Debug::{to_repr}
 
 ///|
 /// Create an empty environment.
