@@ -104,3 +104,5 @@ jobs:
           }
           console.log("playground bridge smoke: ok");
           NODE
+          cp playground/app.js /tmp/moonprobe_app.mjs
+          node --check /tmp/moonprobe_app.mjs
