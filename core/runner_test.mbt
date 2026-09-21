@@ -4,7 +4,7 @@ struct FakeTransport {
 }
 
 ///|
-impl @core.Transport for FakeTransport with async fn execute(
+impl @core.Transport for FakeTransport with fn execute(
   self,
   _request,
   _timeout_ms,
