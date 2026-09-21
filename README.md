@@ -5,7 +5,7 @@
 
 MoonProbe 的目标很简单：让开发者像使用常见 API 调试工具一样，输入 URL、选择方法、填写参数并发送请求；同时把 **Request Model、Environment、Template、Assertion、Collection Runner、Report** 做成可复用的 MoonBit 核心能力。
 
-> 当前状态：**项目启动 / 设计阶段**。仓库于 2026-09-21 建立，功能将以连续公开提交的方式完成。
+> 当前状态：**Gate 1 Core Models 已完成**。Request / Response / Environment / Error 等基础模型已由 MoonBit 实现，并在 Linux / Windows CI 上通过 `moon check --deny-warn`、`moon test` 与 `moon build`。下一阶段进入 Template 与 Assertion Engine。
 
 ## 一句话说明
 

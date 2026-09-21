@@ -15,21 +15,21 @@
 - [x] Scope / Architecture / API Design
 - [x] Test Plan / Demo Plan
 - [x] Apache-2.0 License
-- [ ] 建立 Issues
-- [ ] 初始化 MoonBit module
-- [ ] 配置 CI
+- [x] 建立 Issues
+- [x] 初始化 MoonBit module
+- [x] 配置 CI
 
 ## Gate 1 — Core Models
 
-- [ ] Method
-- [ ] Header
-- [ ] Request
-- [ ] Response
-- [ ] Environment
-- [ ] Error Model
-- [ ] Core 单元测试
+- [x] Method
+- [x] Header
+- [x] Request
+- [x] Response
+- [x] Environment
+- [x] Error Model
+- [x] Core 单元测试
 
-验收：无网络即可通过模型与模板测试。
+验收：无网络即可通过基础模型测试；Linux / Windows CI 已通过。
 
 ## Gate 2 — Template & Assertions
 

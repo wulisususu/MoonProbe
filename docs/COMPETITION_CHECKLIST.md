@@ -13,10 +13,10 @@
 ### 2. 仓库公开且开发过程可追踪
 
 - [x] GitHub 公开仓库
-- [ ] 持续 commits
-- [ ] 使用 Issues 跟踪主要工作
-- [ ] 重要重构尽量保留 PR 或明确 commit
-- [ ] CHANGELOG 持续更新
+- [x] 持续 commits
+- [x] 使用 Issues 跟踪主要工作
+- [x] 重要重构尽量保留 PR 或明确 commit
+- [x] CHANGELOG 持续更新
 
 ### 3. 能够运行
 
@@ -28,11 +28,11 @@
 
 ### 4. 必要测试
 
-- [ ] Core unit tests
+- [x] Core unit tests
 - [ ] Assertion tests
 - [ ] Collection tests
 - [ ] FakeTransport tests
-- [ ] CI 通过
+- [x] CI 通过
 
 ### 5. 开源合规
 
@@ -44,7 +44,7 @@
 ### 6. AI 可解释
 
 - [x] AI_USAGE.md
-- [ ] 关键架构有文档
+- [x] 关键架构有文档
 - [ ] 参赛者可以解释实现
 - [ ] AI 生成代码必须测试后提交
 
@@ -101,4 +101,4 @@
 
 ## 当前状态
 
-2026-09-21：项目初始化与规格冻结阶段。
+2026-09-21：Gate 1 Core Models 完成；Linux / Windows CI 通过，进入 Template & Assertions。
