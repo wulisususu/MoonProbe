@@ -80,13 +80,16 @@ Result
 4. Update
 5. Delete
 
-需要覆盖：
+当前已覆盖：
 
-- 全通过；
-- 中间请求失败但继续；
-- stop-on-failure；
-- 某个 assertion 失败；
-- transport error。
+- [x] 五请求 Todo 场景全通过；
+- [x] 中间请求失败但继续；
+- [x] stop-on-failure；
+- [x] assertion 失败；
+- [x] transport error；
+- [x] 空 Collection；
+- [x] Text Reporter；
+- [x] JSON schema/version 与 null response/error 表达。
 
 ## 5. Regression Fixtures
 

@@ -64,4 +64,21 @@ Gate 2 is complete.
 - CI now refreshes the Mooncakes registry with `moon update` before dependency resolution.
 - Verified real HTTP execution and timeout behavior on Linux and Windows.
 
-Gate 3 is complete. Gate 4 will implement Collection Runner and structured reporting.
+Gate 3 is complete.
+
+#### Collection runner and reporting
+
+- Added `CollectionRequest`, `Collection`, and `CollectionResult` public Core models.
+- Added ordered `run_collection` execution over the existing replaceable Transport trait.
+- Added per-request assertions and timeout configuration inside Collections.
+- Added continue-on-failure as the default execution policy.
+- Added stop-on-failure with explicit `skipped` accounting for requests that were never executed.
+- Added cumulative transport duration, executed/passed/failed/skipped counts, and stable pass state.
+- Added a five-request Todo Collection regression scenario.
+- Added coverage for assertion failure, transport error, stop-on-failure, continue-on-failure, and empty Collections.
+- Added an independent `report/` package with Text and JSON reporters.
+- Added stable machine-readable schema `moonprobe.collection-report.v1`.
+- JSON reports preserve null response fields for transport failures and structured error kind/message data.
+- Reporter tests validate summaries, failed assertions, early-stop output, schema version and timeout serialization.
+
+Gate 4 is complete. Gate 5 will add the first CLI commands.

@@ -30,7 +30,7 @@
 
 - [x] Core unit tests
 - [x] Assertion tests
-- [ ] Collection tests
+- [x] Collection tests
 - [x] FakeTransport tests
 - [x] CI 通过
 
@@ -88,7 +88,7 @@
 
 - [ ] Core 仍可 import
 - [ ] CLI 仍可运行
-- [ ] Collection 仍可执行
+- [x] Collection 仍可执行
 - [ ] 测试仍可运行
 
 ### 删除 AI 叙事测试
@@ -101,4 +101,4 @@
 
 ## 当前状态
 
-2026-09-21：Gate 1–3 完成；Core Models、Template、Assertion Engine、Transport 与单请求 Runner 均通过 Linux / Windows CI，包含真实本地 HTTP 与 timeout 集成测试。下一步进入 Collection Runner / Report。
+2026-09-21：Gate 1–4 完成；Core、Transport、单请求/Collection Runner、Assertions 与 Text/JSON Report 均已有自动测试。5 请求 Todo Collection、stop-on-failure 与结构化 report 已通过 CI；下一步进入 CLI。

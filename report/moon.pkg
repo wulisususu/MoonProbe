@@ -1,0 +1,7 @@
+import {
+  "wulisususu/moonprobe/core",
+}
+
+import {
+  "moonbitlang/core/json",
+} for "test"
