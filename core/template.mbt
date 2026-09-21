@@ -20,9 +20,7 @@ pub fn render_template(
       Some(open_rel) => {
         let open_pos = cursor + open_rel
         if open_pos > cursor {
-          output.write_string(
-            input.substring(start=cursor, end=open_pos),
-          )
+          output.write_view(input[cursor:open_pos])
         }
 
         let name_start = open_pos + 2
