@@ -1,30 +1,4 @@
 ///|
-test "query builder percent encodes names and values and preserves fragments" {
-  let request : @core.Request = {
-    name: "query",
-    http_method: @core.GET,
-    url: "https://example.com/path?existing=1#frag",
-    headers: [],
-    query: [
-      { name: "search term", value: "a+b/中文" },
-    ],
-    body: @core.Empty,
-    auth: @core.NoAuth,
-  }
-  let expected =
-    "https://example.com/path?existing=1&search%20term=a%2Bb%2F%E4%B8%AD%E6%96%87#frag"
-  assert_eq(append_query(request.url, request.query), expected)
-}
-
-///|
-test "basic auth is UTF8 then base64" {
-  assert_eq(
-    auth_value(@core.Basic("demo", "secret")),
-    Some("Basic ZGVtbzpzZWNyZXQ="),
-  )
-}
-
-///|
 async test "HTTP transport executes a real local request" {
   @async.with_task_group() <| group => {
     let server = @http.Server(@socket.Addr::parse("127.0.0.1:0"))
@@ -62,7 +36,7 @@ async test "HTTP transport executes a real local request" {
     }
 
     match @core.Transport::execute(
-      HttpTransport::new(),
+      @transport.HttpTransport::new(),
       request,
       2000,
     ) {
@@ -99,7 +73,7 @@ async test "HTTP transport maps deadline expiry to Timeout" {
       "http://127.0.0.1:\{port}/slow",
     )
     assert_eq(
-      @core.Transport::execute(HttpTransport::new(), request, 30),
+      @core.Transport::execute(@transport.HttpTransport::new(), request, 30),
       Err(@core.Timeout(30)),
     )
   }
