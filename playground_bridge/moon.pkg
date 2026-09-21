@@ -1,0 +1,19 @@
+import {
+  "wulisususu/moonprobe/core",
+  "wulisususu/moonprobe/wire",
+  "wulisususu/moonprobe/report",
+  "moonbitlang/core/debug",
+  "moonbitlang/core/json",
+}
+
+supported_targets = "js"
+
+pkgtype(kind: "foreign_library")
+
+options(
+  link: {
+    "js": {
+      "format": "esm",
+    },
+  },
+)
