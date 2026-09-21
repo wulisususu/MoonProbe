@@ -150,7 +150,6 @@ async fn execute_http(
       ),
     )
   } catch {
-    (_ : @http.URIParseError) => Err(@core.InvalidUrl(url))
     err =>
       Err(
         @core.TransportError(
