@@ -2,7 +2,6 @@ import {
   "wulisususu/moonprobe/core",
   "moonbitlang/async",
   "moonbitlang/async/http",
-  "moonbitlang/async/io",
   "moonbitlang/core/debug",
   "moonbitlang/core/encoding/base64",
   "moonbitlang/core/encoding/percent",
