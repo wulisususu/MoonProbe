@@ -24,4 +24,14 @@ All notable changes to MoonProbe will be documented here.
 - Added black-box Core tests.
 - Added Linux / Windows CI with strict `moon check --deny-warn`, tests and builds.
 
-Gate 1 is complete. Gate 2 will implement template expansion and the first assertion engine.
+Gate 1 is complete.
+
+#### Template expansion
+
+- Added deterministic single-pass `{{variable}}` expansion.
+- Added exact `MissingVariable(name)` errors plus malformed-template validation.
+- Added Request-wide rendering for URL, headers, query parameters, body and auth.
+- Added Unicode, repeated-variable, missing-variable and immutability tests.
+- Verified template changes on Linux and Windows CI.
+
+Gate 2 remains in progress; Assertion Engine is next.

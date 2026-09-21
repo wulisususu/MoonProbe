@@ -33,13 +33,15 @@
 
 ## Gate 2 — Template & Assertions
 
-- [ ] `{{variable}}` 展开
-- [ ] MissingVariable
+- [x] `{{variable}}` 展开
+- [x] MissingVariable
 - [ ] status assertion
 - [ ] header assertion
 - [ ] body contains
 - [ ] JSON field assertion
 - [ ] duration assertion
+
+进度：Template 部分已完成并通过 Linux / Windows CI；Assertion Engine 待实现。
 
 验收：Fake Response 可以完整跑断言。
 
