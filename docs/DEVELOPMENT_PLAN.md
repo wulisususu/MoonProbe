@@ -55,13 +55,13 @@
 
 ## Gate 4 — Collection Runner
 
-- [ ] Collection
-- [ ] ordered runner
-- [ ] stop-on-failure
-- [ ] Text Reporter
-- [ ] JSON Reporter
+- [x] Collection
+- [x] ordered runner
+- [x] stop-on-failure
+- [x] Text Reporter
+- [x] JSON Reporter
 
-验收：一个 5 请求 Collection 可以稳定得到报告。
+验收：5 请求 Todo Collection 已通过顺序执行测试；同时覆盖 continue-on-failure、stop-on-failure、assertion failure、transport error、空 Collection，并生成稳定 Text / JSON 报告。
 
 ## Gate 5 — CLI
 

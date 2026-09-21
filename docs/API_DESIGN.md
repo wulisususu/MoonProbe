@@ -1,6 +1,6 @@
 # MoonProbe 公共 API 设计
 
-> 当前实现状态：Core Models、模板展开、MVP Assertion Engine、Transport abstraction 与单请求 Runner 已实现。Collection / Report / CLI 仍属于后续 Gate。
+> 当前实现状态：Core Models、模板展开、Assertion Engine、Transport、单请求 Runner、Collection Runner 与 Report 已实现。CLI 属于下一 Gate。
 
 ## Request
 
@@ -126,22 +126,54 @@ RequestResult
 
 ## Collection
 
-Gate 4 目标：
+每个 Collection entry 自己携带 Request、Assertions 与 timeout：
 
 ```moonbit
-let report = run_collection(collection, env, transport)
+let collection = @core.new_collection(
+  "Todo API",
+  [
+    @core.collection_request(create_request, [@core.StatusIs(201)]),
+    @core.collection_request(get_request, [@core.StatusIs(200)]),
+  ],
+  stop_on_failure=true,
+)
+
+let result = @core.run_collection(collection, env, transport)
 ```
 
-预计输出：
+`stop_on_failure=false` 是默认值。失败包括模板、Transport 或 Assertion 失败；开启 stop-on-failure 时会保留失败结果，并把后续请求计为 skipped。
 
 ```text
 CollectionResult
+├─ collection_name
 ├─ total
+├─ executed
 ├─ passed
 ├─ failed
-├─ duration
+├─ skipped
+├─ duration_ms
+├─ stopped_early
 └─ requests[]
 ```
+
+`duration_ms` 是已执行请求由 Transport 报告的累计耗时，不混入 Runner 自身开销。
+
+## Report
+
+Reporter 位于独立 `report/` 包，只消费 `CollectionResult`：
+
+```moonbit
+let text = @report.collection_report_text(result)
+let json = @report.collection_report_json(result)
+```
+
+JSON 顶层 schema 使用固定版本：
+
+```text
+moonprobe.collection-report.v1
+```
+
+这样 CLI、CI、Web Demo 或其他工具可以复用同一执行结果，而无需把格式化逻辑塞回 Core。
 
 ## API 设计原则
 

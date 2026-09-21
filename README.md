@@ -5,7 +5,7 @@
 
 MoonProbe 的目标很简单：让开发者像使用常见 API 调试工具一样，输入 URL、选择方法、填写参数并发送请求；同时把 **Request Model、Environment、Template、Assertion、Collection Runner、Report** 做成可复用的 MoonBit 核心能力。
 
-> 当前状态：**Gate 1–3 已完成**。Core Models、模板展开、Assertion Engine、可替换 Transport 与真实 HTTP Request Runner 已由 MoonBit 实现；Linux / Windows CI 均通过真实本地 HTTP 集成测试。下一阶段进入 Collection Runner 与 Report。
+> 当前状态：**Gate 1–4 已完成**。Core Models、模板展开、Assertion Engine、Transport、单请求 Runner、Collection Runner 与 Text/JSON Report 已由 MoonBit 实现，并通过 Linux / Windows CI。下一阶段进入 CLI。
 
 ## 一句话说明
 
@@ -133,13 +133,41 @@ let result = @core.run_request(
 )
 ```
 
-`HttpTransport` 当前基于 `moonbitlang/async`，支持 Query 参数 RFC 3986 编码、Bearer / Basic Auth、JSON / Text Body、响应耗时以及结构化 timeout / transport error。Collection API 将在 Gate 4 建立。
+`HttpTransport` 当前基于 `moonbitlang/async`，支持 Query 参数 RFC 3986 编码、Bearer / Basic Auth、JSON / Text Body、响应耗时以及结构化 timeout / transport error。
+
+## Collection Runner 与报告
+
+Collection 会按声明顺序执行，并为每个请求保存自己的 Assertions 与 timeout：
+
+```moonbit
+let collection = @core.new_collection(
+  "Todo API",
+  [
+    @core.collection_request(create_request, [@core.StatusIs(201)]),
+    @core.collection_request(get_request, [@core.StatusIs(200)]),
+  ],
+  stop_on_failure=true,
+)
+
+let result = @core.run_collection(
+  collection,
+  env,
+  @transport.HttpTransport::new(),
+)
+
+let text = @report.collection_report_text(result)
+let json = @report.collection_report_json(result)
+```
+
+`CollectionResult` 会区分 `total / executed / passed / failed / skipped`，因此 stop-on-failure 后尚未执行的请求不会被误算成失败。JSON 报告使用稳定 schema 标识 `moonprobe.collection-report.v1`。
 
 ## 仓库结构
 
 ```text
 MoonProbe/
 ├─ core/                     # MoonBit 公共核心（项目主体）
+├─ transport/                # Native HTTP Transport
+├─ report/                   # Text / JSON Reporter
 ├─ cli/                      # MoonBit CLI
 ├─ examples/                 # 可运行示例
 ├─ tests/                    # 跨模块测试 / fixtures

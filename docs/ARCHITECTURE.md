@@ -93,15 +93,15 @@ Reporter
 
 ### collection
 
-描述一组请求、执行顺序和每个请求的断言。
+描述一组请求、执行顺序、每个请求的断言/timeout，以及 stop-on-failure 策略。未执行项通过 `skipped` 与失败项区分。
 
 ### runner
 
-协调模板展开、Transport、断言和错误处理。当前 `run_request` 已实现单请求闭环，并返回结构化 `RequestResult`。
+协调模板展开、Transport、断言和错误处理。`run_request` 返回 `RequestResult`；`run_collection` 在同一 Transport abstraction 上按声明顺序执行，并返回 `CollectionResult`。
 
 ### report
 
-把执行结果转换为 Text / JSON 等表示。
+独立 `report/` 包把 `CollectionResult` 转换为 Text / JSON。JSON 报告带稳定 schema version；Reporter 不执行网络，也不依赖 CLI。
 
 ## 错误模型
 
