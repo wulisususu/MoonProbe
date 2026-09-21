@@ -1,0 +1,30 @@
+# MoonBit build artifacts
+target/
+.moon/
+
+# Logs
+*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Web playground
+node_modules/
+dist/
+coverage/
+
+# Temporary
+tmp/
+.temp/
