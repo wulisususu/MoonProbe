@@ -65,11 +65,13 @@
 
 ## Gate 5 — CLI
 
-- [ ] `moonprobe send`
-- [ ] `moonprobe run`
-- [ ] `--env`
-- [ ] `--format text|json`
-- [ ] exit codes
+- [x] `moonprobe send`
+- [x] `moonprobe run`
+- [x] `--env`
+- [x] `--format text|json`
+- [x] exit codes
+
+验收：CLI 参数解析、JSON 输入解析、Help/Version 执行层均有自动测试；native executable 已在 Linux / Windows 通过 check/test/build。
 
 ## Gate 6 — Web Demo
 

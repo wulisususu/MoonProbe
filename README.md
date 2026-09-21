@@ -5,7 +5,7 @@
 
 MoonProbe 的目标很简单：让开发者像使用常见 API 调试工具一样，输入 URL、选择方法、填写参数并发送请求；同时把 **Request Model、Environment、Template、Assertion、Collection Runner、Report** 做成可复用的 MoonBit 核心能力。
 
-> 当前状态：**Gate 1–4 已完成**。Core Models、模板展开、Assertion Engine、Transport、单请求 Runner、Collection Runner 与 Text/JSON Report 已由 MoonBit 实现，并通过 Linux / Windows CI。下一阶段进入 CLI。
+> 当前状态：**Gate 1–5 已完成**。Core、Transport、单请求/Collection Runner、Text/JSON Report 与 Native CLI 均已由 MoonBit 实现，并通过 Linux / Windows CI。下一阶段进入 Web Demo。
 
 ## 一句话说明
 
@@ -188,25 +188,51 @@ MoonProbe/
 └─ LICENSE
 ```
 
-## 开发与验证目标
+## 安装与验证
 
-最终仓库至少应支持：
-
-```bash
-moon check
-moon test
-moon build
-```
-
-并提供一个从零可复现的示例 Collection。
-
-CLI 目标形式：
+需要 MoonBit 工具链。克隆仓库后：
 
 ```bash
-moonprobe send examples/requests/get-user.json
-moonprobe run examples/collections/todo-api.json
-moonprobe run examples/collections/todo-api.json --format json
+moon update
+moon check --target native --deny-warn
+moon test --target native
+moon build --target native
 ```
+
+## CLI
+
+直接通过 MoonBit 运行：
+
+```bash
+moon run cmd/moonprobe -- --help
+moon run cmd/moonprobe -- --version
+```
+
+发送单个请求：
+
+```bash
+moon run cmd/moonprobe -- send examples/requests/get-user.json \
+  --env examples/env/dev.json \
+  --format text
+```
+
+执行 Collection 并输出机器可读 JSON：
+
+```bash
+moon run cmd/moonprobe -- run examples/collections/todo-api.json \
+  --env examples/env/dev.json \
+  --format json
+```
+
+示例中的 `base_url` / token 是模板值；实际执行前请在 `examples/env/dev.json` 中替换为你自己的测试 API。
+
+CLI 退出码：
+
+- `0`：请求/Collection 及全部断言通过；
+- `1`：请求已执行，但网络、响应或断言结果失败；
+- `2`：命令参数、JSON 输入文件或环境配置无效。
+
+完整 CLI JSON 格式见 [docs/CLI.md](docs/CLI.md)。
 
 ## 赛事
 
@@ -234,6 +260,7 @@ MoonProbe 计划参加 **2026 MoonBit 黑客松 · 九月赛**。
 - [公共 API 设计](docs/API_DESIGN.md)
 - [开发计划](docs/DEVELOPMENT_PLAN.md)
 - [测试计划](docs/TEST_PLAN.md)
+- [CLI 使用与 JSON 格式](docs/CLI.md)
 - [Demo 设计](docs/DEMO_PLAN.md)
 - [AI 使用说明](docs/AI_USAGE.md)
 - [赛事验收清单](docs/COMPETITION_CHECKLIST.md)

@@ -81,4 +81,23 @@ Gate 3 is complete.
 - JSON reports preserve null response fields for transport failures and structured error kind/message data.
 - Reporter tests validate summaries, failed assertions, early-stop output, schema version and timeout serialization.
 
-Gate 4 is complete. Gate 5 will add the first CLI commands.
+Gate 4 is complete.
+
+#### Native CLI
+
+- Added a thin `cli/` adapter plus `cmd/moonprobe` executable.
+- Added `moonprobe send <request.json>` for one-request execution.
+- Added `moonprobe run <collection.json>` for ordered Collection execution.
+- Added `--env <env.json>` environment loading.
+- Added `--format text|json` output selection over the existing Reporter package.
+- Added stable exit codes: 0 pass, 1 executed failure, 2 input/configuration error.
+- Added JSON input parsing for Methods, Headers, Query Params, JSON/Text Body, Bearer/Basic Auth, timeout and Assertions.
+- Added Collection and Environment JSON input parsing.
+- Kept CLI wire-format DTO logic outside Core so file-format concerns do not become foundation-library API constraints.
+- Implemented `send` by wrapping the request as a single-item Collection, reusing the same Runner and Reporter paths.
+- Added example Request, Collection, and Environment files.
+- Added parser tests for valid/default/error paths plus Help/Version execution tests.
+- Added `moonbitlang/x/sys` for portable nonzero native exit codes.
+- Verified the native executable and CLI packages on Linux and Windows.
+
+Gate 5 is complete. Gate 6 will build the Web Demo over the existing Core/Report contracts.

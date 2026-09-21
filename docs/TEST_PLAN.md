@@ -91,7 +91,22 @@ Result
 - [x] Text Reporter；
 - [x] JSON schema/version 与 null response/error 表达。
 
-## 5. Regression Fixtures
+## 5. CLI Tests
+
+当前覆盖：
+
+- [x] send / run 参数解析；
+- [x] --env；
+- [x] --format text|json；
+- [x] Help / Version；
+- [x] Request JSON 默认值；
+- [x] Header / Query / JSON Body / Auth / timeout 输入；
+- [x] Collection 与 Environment JSON；
+- [x] 无效 Method / Assertion；
+- [x] Help / Version 执行结果与零退出码；
+- [x] native executable 在 Linux / Windows 构建。
+
+## 6. Regression Fixtures
 
 每发现一个真实 bug，优先增加 fixture：
 
@@ -104,7 +119,7 @@ fixtures/
 └─ assertion-failure/
 ```
 
-## 6. CI 目标
+## 7. CI 目标
 
 至少执行：
 
@@ -117,7 +132,7 @@ moon build
 
 具体命令以实际 MoonBit 版本支持为准，CI 文件建立时重新验证。
 
-## 7. Definition of Done
+## 8. Definition of Done
 
 一个功能只有同时满足以下条件才算完成：
 

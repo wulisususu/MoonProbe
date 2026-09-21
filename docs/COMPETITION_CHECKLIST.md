@@ -20,9 +20,9 @@
 
 ### 3. 能够运行
 
-- [ ] README 有安装步骤
-- [ ] README 有最小运行示例
-- [ ] 提供 examples
+- [x] README 有安装步骤
+- [x] README 有最小运行示例
+- [x] 提供 examples
 - [ ] 提供 Demo
 - [x] 新环境可复现
 
@@ -87,9 +87,9 @@
 假设删除 `playground/`：
 
 - [ ] Core 仍可 import
-- [ ] CLI 仍可运行
+- [x] CLI 仍可运行
 - [x] Collection 仍可执行
-- [ ] 测试仍可运行
+- [x] 测试仍可运行
 
 ### 删除 AI 叙事测试
 
@@ -101,4 +101,4 @@
 
 ## 当前状态
 
-2026-09-21：Gate 1–4 完成；Core、Transport、单请求/Collection Runner、Assertions 与 Text/JSON Report 均已有自动测试。5 请求 Todo Collection、stop-on-failure 与结构化 report 已通过 CI；下一步进入 CLI。
+2026-09-21：Gate 1–5 完成；Core、Transport、单请求/Collection Runner、Report 与 Native CLI 均已有自动测试并通过 Linux / Windows CI。CLI 已提供 send/run、Environment、text/json 输出与稳定退出码；下一步进入 Web Demo。
