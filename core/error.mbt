@@ -14,3 +14,6 @@ pub(all) enum ProbeError {
   AssertionFailure(String)
   CollectionError(String)
 } derive(Eq, @debug.Debug)
+
+pub extend ProbeError with Eq::{not_equal, equal}
+pub extend ProbeError with @debug.Debug::{to_repr}
