@@ -60,3 +60,11 @@ jobs:
 
       - name: Build
         run: moon build --target native
+
+      - name: Check playground bridge
+        if: runner.os == 'Linux'
+        run: moon check playground_bridge --target js --deny-warn
+
+      - name: Build playground bridge
+        if: runner.os == 'Linux'
+        run: moon build playground_bridge --target js
