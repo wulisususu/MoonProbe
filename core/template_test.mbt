@@ -113,7 +113,7 @@ test "render request expands url headers query body and auth" {
   ])
 
   match @core.render_request(request, env) {
-    Err(err) => fail("unexpected render error: \{err}")
+    Err(_) => fail("unexpected render error")
     Ok(rendered) => {
       assert_eq(rendered.url, "https://api.example.com/todos/7")
       assert_eq(rendered.headers[0].name, "X-Trace")
