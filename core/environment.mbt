@@ -23,7 +23,7 @@ pub fn empty_environment() -> Environment {
 ///|
 /// Create an environment from explicit variables.
 pub fn environment(values : Array[Variable]) -> Environment {
-  { values }
+  { values, }
 }
 
 ///|
