@@ -46,4 +46,22 @@ Gate 1 is complete.
 - Hardened CI with installer retries, `actions/checkout@v5`, and non-fail-fast matrix execution.
 - Verified assertion changes on Linux and Windows CI.
 
-Gate 2 is complete. Gate 3 will introduce the Transport abstraction and real request execution.
+Gate 2 is complete.
+
+#### Transport and single-request runner
+
+- Added the replaceable async `Transport` trait to Core.
+- Added structured `RequestResult` and `run_request` orchestration.
+- Added FakeTransport runner tests for success, render failures, transport failures and timeout validation.
+- Added `HttpTransport` backed by `moonbitlang/async@0.22.1`.
+- Added GET / POST / PUT / PATCH / DELETE / HEAD / OPTIONS method mapping.
+- Added RFC 3986 Query parameter encoding.
+- Added Bearer and UTF-8 + Base64 Basic authentication.
+- Added JSON content-type handling, response header capture and elapsed-time measurement.
+- Added deadline cancellation mapped to structured `Timeout`.
+- Added real loopback HTTP integration tests with no public-network dependency.
+- Added white-box encoding tests while keeping real transport execution black-box.
+- CI now refreshes the Mooncakes registry with `moon update` before dependency resolution.
+- Verified real HTTP execution and timeout behavior on Linux and Windows.
+
+Gate 3 is complete. Gate 4 will implement Collection Runner and structured reporting.

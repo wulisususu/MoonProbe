@@ -1,35 +1,35 @@
-# MoonProbe 公共 API 设计草案
+# MoonProbe 公共 API 设计
 
-> 本文同时记录当前公共 API 与后续目标。Core Models、模板展开及 MVP Assertion Engine 已实现；Runner / Transport 仍为目标设计。
+> 当前实现状态：Core Models、模板展开、MVP Assertion Engine、Transport abstraction 与单请求 Runner 已实现。Collection / Report / CLI 仍属于后续 Gate。
 
 ## Request
 
-目标：
+当前基础构造：
 
 ```moonbit
-let req = Request::new(GET, "https://api.example.com/users/{{user_id}}")
-  .header("Authorization", "Bearer {{token}}")
-  .query("include", "profile")
+let req = @core.new_request(
+  "Get user",
+  @core.GET,
+  "{{base_url}}/users/1",
+)
 ```
 
-JSON Body：
-
-```moonbit
-let req = Request::post("{{base_url}}/todos")
-  .json_body("{\"title\":\"MoonProbe\"}")
-```
+完整 `Request` 还可以显式携带 Headers、Query、Body 与 Auth。
 
 ## Environment
 
 ```moonbit
-let env = Environment::new()
-  .set("base_url", "https://api.example.com")
-  .set("token", "demo-token")
+let env = @core.environment([
+  { name: "base_url", value: "https://api.example.com" },
+  { name: "token", value: "demo-token" },
+])
 ```
+
+模板展开采用单次 `{{variable}}` 替换；缺失变量返回结构化 `MissingVariable(name)`。
 
 ## Assertion
 
-当前实现使用显式 Assertion 枚举：
+当前使用显式 `Assertion` 枚举：
 
 ```moonbit
 let assertions = [
@@ -44,67 +44,74 @@ let results = @core.evaluate_assertions(assertions, response)
 let passed = @core.assertions_passed(results)
 ```
 
-首版 JSON Path 只支持对象路径：`# MoonProbe 公共 API 设计草案
+首版 JSON Path 只支持对象路径：`$`、`$.id`、`$.user.id`。数组索引与完整 JSONPath 语法不属于 v0.1。
 
-> 本文同时记录当前公共 API 与后续目标。Core Models、模板展开及 MVP Assertion Engine 已实现；Runner / Transport 仍为目标设计。
+## Transport
 
-## Request
-
-目标：
+Core 只依赖可替换 trait：
 
 ```moonbit
-let req = Request::new(GET, "https://api.example.com/users/{{user_id}}")
-  .header("Authorization", "Bearer {{token}}")
-  .query("include", "profile")
+pub(open) trait Transport {
+  async fn execute(
+    Self,
+    Request,
+    timeout_ms : Int,
+  ) -> Result[Response, ProbeError]
+}
 ```
 
-JSON Body：
+默认 Native 实现位于独立 `transport/` 包：
 
 ```moonbit
-let req = Request::post("{{base_url}}/todos")
-  .json_body("{\"title\":\"MoonProbe\"}")
+let transport = @transport.HttpTransport::new()
 ```
 
-## Environment
+当前 `HttpTransport` 基于 `moonbitlang/async@0.22.1`，负责：
 
-```moonbit
-let env = Environment::new()
-  .set("base_url", "https://api.example.com")
-  .set("token", "demo-token")
-```
-
-## Assertion
-
-、`$.id`、`$.user.id`。数组索引与完整 JSONPath 语法不属于 v0.1。
+- HTTP / HTTPS 请求；
+- Method 映射；
+- RFC 3986 Query 参数编码；
+- Bearer / Basic Auth；
+- JSON / Text Body；
+- Response status / headers / body / duration；
+- timeout 与 transport error 映射。
 
 ## Runner
 
-```moonbit
-let result = run(request, env, assertions, transport)
-```
-
-结果不通过异常字符串表达，而返回结构化 RequestResult。
-
-## Collection
+单请求执行已经形成完整协调链路：
 
 ```moonbit
-let collection = Collection::new("Todo API")
-  .add(create_todo)
-  .add(get_todo)
-  .add(update_todo)
-  .add(delete_todo)
-
-let report = run_collection(collection, env, transport)
+let result = @core.run_request(
+  request,
+  env,
+  assertions,
+  @transport.HttpTransport::new(),
+  timeout_ms=10000,
+)
 ```
 
-## Result
+执行顺序：
 
-预期结构：
+```text
+Request
+  ↓
+render_request
+  ↓
+Transport.execute
+  ↓
+Response
+  ↓
+evaluate_assertions
+  ↓
+RequestResult
+```
+
+`RequestResult` 不依赖打印字符串表达失败：
 
 ```text
 RequestResult
 ├─ request_name
-├─ response
+├─ response?
 │  ├─ status
 │  ├─ headers
 │  ├─ body
@@ -117,7 +124,15 @@ RequestResult
 └─ error?
 ```
 
-CollectionResult：
+## Collection
+
+Gate 4 目标：
+
+```moonbit
+let report = run_collection(collection, env, transport)
+```
+
+预计输出：
 
 ```text
 CollectionResult
@@ -135,4 +150,5 @@ CollectionResult
 - 错误可枚举、可匹配；
 - Runner 不依赖具体网络实现；
 - 测试中可以完全替换 Transport；
+- Native Transport 放在适配层，不让网络库侵入 Core 模型；
 - JSON 报告需要版本字段，为后续兼容留空间。

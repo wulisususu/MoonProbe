@@ -7,7 +7,7 @@
 ### 1. MoonBit 为主
 
 - [ ] MoonBit 为项目主要实现语言
-- [ ] Core / Runner / Assertions 由 MoonBit 实现
+- [x] Core / Runner / Assertions 由 MoonBit 实现
 - [ ] UI 不承载核心逻辑
 
 ### 2. 仓库公开且开发过程可追踪
@@ -24,14 +24,14 @@
 - [ ] README 有最小运行示例
 - [ ] 提供 examples
 - [ ] 提供 Demo
-- [ ] 新环境可复现
+- [x] 新环境可复现
 
 ### 4. 必要测试
 
 - [x] Core unit tests
 - [x] Assertion tests
 - [ ] Collection tests
-- [ ] FakeTransport tests
+- [x] FakeTransport tests
 - [x] CI 通过
 
 ### 5. 开源合规
@@ -101,4 +101,4 @@
 
 ## 当前状态
 
-2026-09-21：Gate 1–2 完成；Core Models、Template、Assertion Engine 均通过 Linux / Windows CI，下一步进入 Transport & Request Runner。
+2026-09-21：Gate 1–3 完成；Core Models、Template、Assertion Engine、Transport 与单请求 Runner 均通过 Linux / Windows CI，包含真实本地 HTTP 与 timeout 集成测试。下一步进入 Collection Runner / Report。
