@@ -1,0 +1,14 @@
+import {
+  "wulisususu/moonprobe/core",
+  "moonbitlang/async",
+  "moonbitlang/async/http",
+  "moonbitlang/async/io",
+  "moonbitlang/core/debug",
+  "moonbitlang/core/encoding/base64",
+  "moonbitlang/core/encoding/percent",
+  "moonbitlang/core/encoding/utf8",
+}
+
+import {
+  "moonbitlang/async/socket",
+} for "test"
