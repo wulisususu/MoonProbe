@@ -34,4 +34,16 @@ Gate 1 is complete.
 - Added Unicode, repeated-variable, missing-variable and immutability tests.
 - Verified template changes on Linux and Windows CI.
 
-Gate 2 remains in progress; Assertion Engine is next.
+#### Assertion engine
+
+- Added structured `Assertion` and `AssertionResult` models.
+- Added status equality and range assertions.
+- Added case-insensitive header existence / contains assertions.
+- Added body substring assertions.
+- Added minimal object JSON path existence / equality assertions.
+- Added response-time assertions.
+- Added ordered multi-assertion evaluation and aggregate pass state.
+- Hardened CI with installer retries, `actions/checkout@v5`, and non-fail-fast matrix execution.
+- Verified assertion changes on Linux and Windows CI.
+
+Gate 2 is complete. Gate 3 will introduce the Transport abstraction and real request execution.

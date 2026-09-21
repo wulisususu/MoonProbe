@@ -35,15 +35,13 @@
 
 - [x] `{{variable}}` 展开
 - [x] MissingVariable
-- [ ] status assertion
-- [ ] header assertion
-- [ ] body contains
-- [ ] JSON field assertion
-- [ ] duration assertion
+- [x] status assertion
+- [x] header assertion
+- [x] body contains
+- [x] JSON field assertion
+- [x] duration assertion
 
-进度：Template 部分已完成并通过 Linux / Windows CI；Assertion Engine 待实现。
-
-验收：Fake Response 可以完整跑断言。
+验收：Template 与 Assertion Engine 均已完成；Fake Response 可完整执行断言，Linux / Windows CI 已通过。
 
 ## Gate 3 — Transport & Single Request
 
