@@ -83,7 +83,9 @@ Reporter
 
 ### transport
 
-负责实际 IO。Core 使用接口/trait 隔离具体实现。
+负责实际 IO。Core 使用 `Transport` trait 隔离具体实现。
+
+当前 Native 适配器位于 `transport/HttpTransport`，基于 `moonbitlang/async`；Core 本身不 import HTTP client。测试可以用 FakeTransport 完整替换网络层。
 
 ### assertion
 
@@ -95,7 +97,7 @@ Reporter
 
 ### runner
 
-协调模板展开、Transport、断言和错误处理。
+协调模板展开、Transport、断言和错误处理。当前 `run_request` 已实现单请求闭环，并返回结构化 `RequestResult`。
 
 ### report
 

@@ -45,13 +45,13 @@
 
 ## Gate 3 — Transport & Single Request
 
-- [ ] Transport abstraction
-- [ ] Native transport
-- [ ] timeout
-- [ ] request execution
-- [ ] integration tests
+- [x] Transport abstraction
+- [x] Native transport
+- [x] timeout
+- [x] request execution
+- [x] integration tests
 
-验收：CLI 或示例可真实访问测试 API。
+验收：FakeTransport 可完全替换真实网络；HttpTransport 已在 Linux / Windows CI 中通过本地真实 HTTP 请求与 timeout 集成测试。
 
 ## Gate 4 — Collection Runner
 

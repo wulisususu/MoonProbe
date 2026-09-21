@@ -5,7 +5,7 @@
 
 MoonProbe 的目标很简单：让开发者像使用常见 API 调试工具一样，输入 URL、选择方法、填写参数并发送请求；同时把 **Request Model、Environment、Template、Assertion、Collection Runner、Report** 做成可复用的 MoonBit 核心能力。
 
-> 当前状态：**Gate 1–2 已完成**。Core Models、`{{variable}}` 模板展开与 MVP Assertion Engine 已由 MoonBit 实现，并在 Linux / Windows CI 上通过严格检查、测试与构建。下一阶段进入 Transport 与真实 HTTP Request Runner。
+> 当前状态：**Gate 1–3 已完成**。Core Models、模板展开、Assertion Engine、可替换 Transport 与真实 HTTP Request Runner 已由 MoonBit 实现；Linux / Windows CI 均通过真实本地 HTTP 集成测试。下一阶段进入 Collection Runner 与 Report。
 
 ## 一句话说明
 
@@ -111,27 +111,29 @@ core/
 - 多人协作
 - 插件市场
 
-## 计划中的最小 API
+## 当前最小执行 API
 
-> 以下为设计草案，最终 API 会随着测试和实现迭代。
-
-```moonbit
-let request = @moonprobe.Request::get("https://api.example.com/users/1")
-  .header("Authorization", "Bearer {{token}}")
-
-let result = @moonprobe.run(request, env)
-
-let checks = [
-  @moonprobe.status_is(200),
-  @moonprobe.json_exists("$.id"),
-]
-```
-
-Collection：
+单请求执行已经打通模板、HTTP Transport 和断言：
 
 ```moonbit
-let report = @moonprobe.run_collection(collection, env)
+let request = @core.new_request(
+  "Get user",
+  @core.GET,
+  "{{base_url}}/users/1",
+)
+
+let result = @core.run_request(
+  request,
+  env,
+  [
+    @core.StatusIs(200),
+    @core.JsonExists("$.id"),
+  ],
+  @transport.HttpTransport::new(),
+)
 ```
+
+`HttpTransport` 当前基于 `moonbitlang/async`，支持 Query 参数 RFC 3986 编码、Bearer / Basic Auth、JSON / Text Body、响应耗时以及结构化 timeout / transport error。Collection API 将在 Gate 4 建立。
 
 ## 仓库结构
 
