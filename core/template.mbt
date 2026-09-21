@@ -11,10 +11,10 @@ pub fn render_template(
   let mut cursor = 0
 
   while cursor < input.length() {
-    let remaining = input.substring(start=cursor)
+    let remaining = input[cursor:]
     match remaining.find("{{") {
       None => {
-        output.write_string(remaining)
+        output.write_view(remaining)
         cursor = input.length()
       }
       Some(open_rel) => {
@@ -26,7 +26,7 @@ pub fn render_template(
         }
 
         let name_start = open_pos + 2
-        let after_open = input.substring(start=name_start)
+        let after_open = input[name_start:]
         match after_open.find("}}") {
           None =>
             return Err(
@@ -34,7 +34,7 @@ pub fn render_template(
             )
           Some(close_rel) => {
             let close_pos = name_start + close_rel
-            let name = input.substring(start=name_start, end=close_pos)
+            let name = input[name_start:close_pos].to_owned()
             if name.length() == 0 {
               return Err(
                 InvalidRequest("template variable name must not be empty"),
