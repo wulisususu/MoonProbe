@@ -75,14 +75,17 @@
 
 ## Gate 6 — Web Demo
 
-- [ ] Request Builder
-- [ ] Response Viewer
-- [ ] Collection Sidebar
-- [ ] Test Results
-- [ ] Built-in Todo API scenario
-- [ ] 一键 Run Collection
+- [x] Request Builder
+- [x] Response Viewer
+- [x] Collection Sidebar
+- [x] Test Results
+- [x] Built-in Todo API scenario
+- [x] 一键 Run Collection
+- [x] MoonBit JS Bridge
+- [x] GitHub Pages workflow
+- [x] JS ABI smoke test
 
-验收：第一次打开页面的人无需阅读说明即可理解项目用途。
+验收：页面第一屏直接显示 Collection / Method / URL / Send / Response / Assertions；MoonBit Bridge 在 JS target 编译后由 Node 实际导入并调用通过。
 
 ## Gate 7 — Submission
 

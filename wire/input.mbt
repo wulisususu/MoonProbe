@@ -320,7 +320,7 @@ fn parse_collection_request_json(
 }
 
 ///|
-fn parse_request_document(
+pub fn parse_request_document(
   text : String,
   label : String,
 ) -> Result[@core.CollectionRequest, String] {
@@ -331,7 +331,7 @@ fn parse_request_document(
 }
 
 ///|
-fn parse_collection_document(
+pub fn parse_collection_document(
   text : String,
   label : String,
 ) -> Result[@core.Collection, String] {
@@ -367,7 +367,7 @@ fn parse_collection_document(
 }
 
 ///|
-fn parse_environment_document(
+pub fn parse_environment_document(
   text : String,
   label : String,
 ) -> Result[@core.Environment, String] {

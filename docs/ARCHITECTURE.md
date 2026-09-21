@@ -135,12 +135,21 @@ Assertion Engine
 
 ## Web 与 Core 的边界
 
-Playground 允许使用 TypeScript/HTML/CSS 完成交互层，但：
+Playground 使用 HTML/CSS/JavaScript 完成交互和浏览器 `fetch`，但模板、断言与报告不在 JavaScript 重写。
 
-- 请求模型来自 Core；
-- 模板规则来自 Core；
-- Assertions 来自 Core；
-- Collection Runner 来自 Core；
-- 结构化报告来自 Core。
+为避免 CLI 与 Web 各自维护 JSON 语义，新增纯 MoonBit `wire/` 包：
 
-比赛阶段优先确保 MoonBit 代码是项目主体。
+```text
+CLI JSON ───────┐
+                ├─> wire.parse ─> Core models
+Playground JSON ┘
+```
+
+浏览器通过 `playground_bridge/` 的 JS foreign-library 导出调用：
+
+- `prepare_request_json`：wire parse + Environment + `core.render_request`；
+- `evaluate_response_report_json`：Response 构造 + `core.evaluate_assertions` + `report.collection_report_json`。
+
+浏览器网络 IO 由 `fetch` 完成，因此 CORS 约束被明确保留。Native CLI 仍走真正的 `HttpTransport`。
+
+Playground 的 Run all 顺序循环属于 Browser Adapter；核心模板、断言判定和稳定 report schema 仍来自 MoonBit。

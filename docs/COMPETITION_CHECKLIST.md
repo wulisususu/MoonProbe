@@ -8,7 +8,7 @@
 
 - [ ] MoonBit 为项目主要实现语言
 - [x] Core / Runner / Assertions 由 MoonBit 实现
-- [ ] UI 不承载核心逻辑
+- [x] UI 不复制模板 / 断言 / Report 核心逻辑
 
 ### 2. 仓库公开且开发过程可追踪
 
@@ -23,7 +23,7 @@
 - [x] README 有安装步骤
 - [x] README 有最小运行示例
 - [x] 提供 examples
-- [ ] 提供 Demo
+- [x] 提供 Demo
 - [x] 新环境可复现
 
 ### 4. 必要测试
@@ -76,17 +76,17 @@
 
 陌生评委打开 Demo：
 
-- [ ] 能看出是 API 工具
-- [ ] 能找到 URL
-- [ ] 能找到 Send
-- [ ] 能看到 Response
-- [ ] 能看到 Test Result
+- [x] 能看出是 API 工具
+- [x] 能找到 URL
+- [x] 能找到 Send
+- [x] 能看到 Response
+- [x] 能看到 Test Result
 
 ### 删除 UI 测试
 
 假设删除 `playground/`：
 
-- [ ] Core 仍可 import
+- [x] Core 仍可 import
 - [x] CLI 仍可运行
 - [x] Collection 仍可执行
 - [x] 测试仍可运行
@@ -95,10 +95,10 @@
 
 假设 README 完全不提 AI：
 
-- [ ] 项目仍有独立价值
-- [ ] API 调试场景仍成立
-- [ ] Collection Runner 仍成立
+- [x] 项目仍有独立价值
+- [x] API 调试场景仍成立
+- [x] Collection Runner 仍成立
 
 ## 当前状态
 
-2026-09-21：Gate 1–5 完成；Core、Transport、单请求/Collection Runner、Report 与 Native CLI 均已有自动测试并通过 Linux / Windows CI。CLI 已提供 send/run、Environment、text/json 输出与稳定退出码；下一步进入 Web Demo。
+2026-09-21：Gate 1–6 完成；新增 wire 共享解析包、MoonBit JS foreign-library Bridge、Request Builder/Response/Assertions/Collection Playground 与 GitHub Pages 构建流程。JS Bridge 除编译外，还由 Node 实际导入并调用验证导出 ABI。下一步进入 Gate 7 提交前验收。

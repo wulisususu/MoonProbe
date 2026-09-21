@@ -100,4 +100,21 @@ Gate 4 is complete.
 - Added `moonbitlang/x/sys` for portable nonzero native exit codes.
 - Verified the native executable and CLI packages on Linux and Windows.
 
-Gate 5 is complete. Gate 6 will build the Web Demo over the existing Core/Report contracts.
+Gate 5 is complete.
+
+#### Web Playground
+
+- Extracted JSON input parsing from CLI into reusable pure-MoonBit `wire/` package.
+- CLI now consumes the shared wire parser instead of owning a private parser copy.
+- Added `playground_bridge/` as a JavaScript-target MoonBit foreign library.
+- Exported `prepare_request_json` to parse Request/Environment input and apply Core template rendering before browser IO.
+- Exported `evaluate_response_report_json` to evaluate browser response data with the Core Assertion Engine and return the existing versioned report schema.
+- Added Node ABI smoke coverage that imports the generated ESM module and calls both exported bridge functions.
+- Added a responsive API workbench with Method/URL/Send, Body/Headers/Params/Auth/Tests editors, Response Viewer and assertion results.
+- Added a five-request Todo API collection backed by a CORS-friendly public demo endpoint.
+- Added ordered one-click browser collection execution and per-request result indicators.
+- Added explicit browser CORS messaging; Native CLI remains the unrestricted network transport.
+- Added GitHub Pages workflow that compiles the MoonBit JS Bridge and stages it with the static playground.
+- Added JS target check/build to CI and syntax validation for the browser module.
+
+Gate 6 is complete. Gate 7 is submission hardening and final verification.

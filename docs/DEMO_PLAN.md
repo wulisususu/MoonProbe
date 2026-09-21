@@ -70,27 +70,37 @@ Response:
 
 ### Scenario B — Auth Flow
 
-Login 获取 token，然后后续请求使用 `{{token}}`。
-
-用于展示 Environment / Template 的价值。
+后续扩展项。当前 Request Builder 已支持 Bearer / Basic Auth wire format，但默认公开 Demo 不依赖真实账号。
 
 ### Scenario C — AI-generated API regression
 
-展示 AI 修改后，一个旧接口断言失败。
-
-用于解释 AI Coding 时代的价值，但不让 AI 成为项目主体。
+后续叙事场景。首版先把通用 Todo API 调试与回归流程做完整，不让 AI 成为项目主体。
 
 ## Demo 与 Core 的关系
 
-页面应明确标注：
+页面明确标注：
 
-> The same MoonBit Core powers the CLI and this playground.
+> MoonBit Core · Browser Fetch Adapter
 
-并展示极短代码：
+当前浏览器边界：
 
-```moonbit
-let report = @moonprobe.run_collection(collection, env)
+```text
+UI builds Request JSON
+      ↓
+MoonBit wire.parse
+      ↓
+MoonBit core.render_request
+      ↓
+Browser fetch (CORS applies)
+      ↓
+MoonBit core.evaluate_assertions
+      ↓
+MoonBit report.collection_report_json
 ```
+
+CLI 与 Playground 共用 `wire/` JSON 输入语义、Environment 模板、Assertion Engine 和 Report schema。浏览器的实际网络 IO 由 host `fetch` 承担；Native CLI 使用 `HttpTransport`。
+
+一键 Collection 的顺序循环位于 Browser Adapter；每个请求的模板与结果判定仍回到 MoonBit Core。这样不假装浏览器具备 Native Transport 能力，也不在 UI 复制断言规则。
 
 ## 浏览器网络限制
 

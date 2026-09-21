@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="MoonProbe — MoonBit-native API debugging and automated testing playground." />
+  <title>MoonProbe Playground</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-mark">MP</div>
+      <div>
+        <h1>MoonProbe</h1>
+        <p>API Debugging & Testing, powered by MoonBit</p>
+      </div>
+    </div>
+    <div class="runtime-badge"><span></span> MoonBit Core · Browser Fetch Adapter</div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">COLLECTION</p>
+          <h2>Todo API</h2>
+        </div>
+        <button id="runCollection" class="secondary">Run all</button>
+      </div>
+      <p class="hint">CORS-friendly public demo. Requests run in declaration order.</p>
+      <nav id="requestList" class="request-list"></nav>
+      <div class="env-card">
+        <label for="baseUrl">Environment · base_url</label>
+        <input id="baseUrl" value="https://jsonplaceholder.typicode.com" />
+      </div>
+      <div class="architecture-note">
+        <strong>Same contracts as CLI</strong>
+        <span>JSON input → MoonBit template/assertions/report → browser fetch IO</span>
+      </div>
+    </aside>
+
+    <section class="editor panel">
+      <div class="request-bar">
+        <select id="method" aria-label="HTTP method">
+          <option>GET</option><option>POST</option><option>PUT</option>
+          <option>PATCH</option><option>DELETE</option>
+        </select>
+        <input id="url" aria-label="Request URL" />
+        <button id="send" class="primary">Send</button>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="body">Body</button>
+        <button class="tab" data-tab="headers">Headers</button>
+        <button class="tab" data-tab="query">Params</button>
+        <button class="tab" data-tab="auth">Auth</button>
+        <button class="tab" data-tab="tests">Tests</button>
+      </div>
+
+      <div class="tab-panels">
+        <div class="tab-panel active" data-panel="body"><label>JSON / text body</label><textarea id="body" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="headers"><label>Headers · JSON array</label><textarea id="headers" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="query"><label>Query params · JSON array</label><textarea id="query" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="auth"><label>Auth · JSON object</label><textarea id="auth" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="tests"><label>Assertions · JSON array</label><textarea id="tests" spellcheck="false"></textarea></div>
+      </div>
+
+      <div class="core-strip">
+        <span>MoonBit path</span>
+        <code>wire.parse → core.render_request → fetch → core.evaluate_assertions → report.v1</code>
+      </div>
+    </section>
+
+    <section class="response panel">
+      <div class="panel-head response-head">
+        <div><p class="eyebrow">RESPONSE</p><h2 id="responseTitle">Ready</h2></div>
+        <div id="metrics" class="metrics"></div>
+      </div>
+      <pre id="responseBody" class="response-body">Select a request and press Send.</pre>
+      <div class="assertion-section">
+        <div class="assertion-title"><h3>Assertions</h3><span id="assertionSummary">—</span></div>
+        <div id="assertions" class="assertions"></div>
+      </div>
+    </section>
+  </main>
+
+  <section class="collection-results panel">
+    <div class="panel-head">
+      <div><p class="eyebrow">COLLECTION RUN</p><h2>Regression results</h2></div>
+      <div id="collectionSummary" class="summary-pill">Not run</div>
+    </div>
+    <div id="collectionRows" class="collection-rows">
+      <div class="empty-state">Run the Todo API collection to see ordered request results.</div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Browser networking is subject to CORS. Native CLI remains the unrestricted transport.</span>
+    <a href="https://github.com/wulisususu/MoonProbe">GitHub repository</a>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
