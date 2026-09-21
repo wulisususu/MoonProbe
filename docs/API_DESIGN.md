@@ -1,6 +1,6 @@
 # MoonProbe 公共 API 设计草案
 
-> 本文描述目标 API，不代表当前已实现。
+> 本文同时记录当前公共 API 与后续目标。Core Models、模板展开及 MVP Assertion Engine 已实现；Runner / Transport 仍为目标设计。
 
 ## Request
 
@@ -29,17 +29,53 @@ let env = Environment::new()
 
 ## Assertion
 
-目标形式：
+当前实现使用显式 Assertion 枚举：
 
 ```moonbit
 let assertions = [
-  status_is(200),
-  header_exists("content-type"),
-  json_exists("$.id"),
-  json_equals("$.name", "Alice"),
-  response_time_lt(500),
+  @core.StatusIs(200),
+  @core.HeaderExists("content-type"),
+  @core.JsonExists("$.id"),
+  @core.JsonEquals("$.name", "Alice"),
+  @core.ResponseTimeLessThan(500),
 ]
+
+let results = @core.evaluate_assertions(assertions, response)
+let passed = @core.assertions_passed(results)
 ```
+
+首版 JSON Path 只支持对象路径：`# MoonProbe 公共 API 设计草案
+
+> 本文同时记录当前公共 API 与后续目标。Core Models、模板展开及 MVP Assertion Engine 已实现；Runner / Transport 仍为目标设计。
+
+## Request
+
+目标：
+
+```moonbit
+let req = Request::new(GET, "https://api.example.com/users/{{user_id}}")
+  .header("Authorization", "Bearer {{token}}")
+  .query("include", "profile")
+```
+
+JSON Body：
+
+```moonbit
+let req = Request::post("{{base_url}}/todos")
+  .json_body("{\"title\":\"MoonProbe\"}")
+```
+
+## Environment
+
+```moonbit
+let env = Environment::new()
+  .set("base_url", "https://api.example.com")
+  .set("token", "demo-token")
+```
+
+## Assertion
+
+、`$.id`、`$.user.id`。数组索引与完整 JSONPath 语法不属于 v0.1。
 
 ## Runner
 

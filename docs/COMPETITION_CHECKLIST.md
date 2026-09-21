@@ -29,7 +29,7 @@
 ### 4. 必要测试
 
 - [x] Core unit tests
-- [ ] Assertion tests
+- [x] Assertion tests
 - [ ] Collection tests
 - [ ] FakeTransport tests
 - [x] CI 通过
@@ -101,4 +101,4 @@
 
 ## 当前状态
 
-2026-09-21：Gate 1 Core Models 完成；Linux / Windows CI 通过，进入 Template & Assertions。
+2026-09-21：Gate 1–2 完成；Core Models、Template、Assertion Engine 均通过 Linux / Windows CI，下一步进入 Transport & Request Runner。
