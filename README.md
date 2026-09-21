@@ -5,7 +5,7 @@
 
 MoonProbe 的目标很简单：让开发者像使用常见 API 调试工具一样，输入 URL、选择方法、填写参数并发送请求；同时把 **Request Model、Environment、Template、Assertion、Collection Runner、Report** 做成可复用的 MoonBit 核心能力。
 
-> 当前状态：**Gate 1–5 已完成**。Core、Transport、单请求/Collection Runner、Text/JSON Report 与 Native CLI 均已由 MoonBit 实现，并通过 Linux / Windows CI。下一阶段进入 Web Demo。
+> 当前状态：**Gate 1–6 已完成**。Core、Native Transport、Collection Runner、Text/JSON Report、Native CLI 与 MoonBit-backed Web Playground 均已实现；Native 走 Linux / Windows CI，Playground Bridge 额外通过 JS target 与 Node ABI 冒烟测试。下一阶段进入提交前验收。
 
 ## 一句话说明
 
@@ -169,6 +169,8 @@ MoonProbe/
 ├─ transport/                # Native HTTP Transport
 ├─ report/                   # Text / JSON Reporter
 ├─ cli/                      # MoonBit CLI
+├─ wire/                     # CLI / Playground 共用 JSON wire parser
+├─ playground_bridge/        # MoonBit → JS bridge
 ├─ examples/                 # 可运行示例
 ├─ tests/                    # 跨模块测试 / fixtures
 ├─ playground/               # Web Demo，参考应用
@@ -233,6 +235,35 @@ CLI 退出码：
 - `2`：命令参数、JSON 输入文件或环境配置无效。
 
 完整 CLI JSON 格式见 [docs/CLI.md](docs/CLI.md)。
+
+## Web Playground
+
+`playground/` 是参考 UI，不重新实现 MoonBit 的模板、断言和 Report：
+
+```text
+Browser UI / fetch
+      ↓
+MoonBit JS Bridge
+      ↓
+wire.parse
+core.render_request
+core.evaluate_assertions
+report.collection_report_json
+```
+
+Playground 提供：
+
+- Method + URL + Send；
+- Body / Headers / Params / Auth / Tests 编辑；
+- Response status / body / duration；
+- Assertion 逐项通过/失败；
+- 5 请求 Todo Collection；
+- 一键顺序 Run all；
+- 可编辑 `base_url` Environment。
+
+默认 Demo API 使用 CORS-friendly 的 JSONPlaceholder。浏览器仍受 CORS 限制；真正的任意网络访问由 Native CLI 承担。
+
+GitHub Pages 在 `main` 上由 `.github/workflows/pages.yml` 自动构建 MoonBit JS Bridge 后部署。
 
 ## 赛事
 
