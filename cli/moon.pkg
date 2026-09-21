@@ -2,9 +2,7 @@ import {
   "wulisususu/moonprobe/core",
   "wulisususu/moonprobe/transport",
   "wulisususu/moonprobe/report",
-  "moonbitlang/async",
   "moonbitlang/async/fs",
-  "moonbitlang/async/io",
   "moonbitlang/core/debug",
   "moonbitlang/core/json",
 }
