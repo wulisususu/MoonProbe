@@ -20,19 +20,6 @@ fn required_string(
 }
 
 ///|
-fn optional_string(
-  object : Map[String, Json],
-  key : String,
-  default : String,
-) -> Result[String, String] {
-  match object.get(key) {
-    None | Some(Null) => Ok(default)
-    Some(String(value)) => Ok(value)
-    Some(_) => Err("field '\{key}' must be a string")
-  }
-}
-
-///|
 fn optional_bool(
   object : Map[String, Json],
   key : String,
