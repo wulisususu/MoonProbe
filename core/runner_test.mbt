@@ -4,6 +4,7 @@ struct FakeTransport {
 }
 
 ///|
+#warnings("-implicit_impl_as_method")
 impl @core.Transport for FakeTransport with fn execute(
   self,
   _request,
@@ -11,9 +12,6 @@ impl @core.Transport for FakeTransport with fn execute(
 ) {
   self.result
 }
-
-///|
-extend FakeTransport with @core.Transport::{execute}
 
 ///|
 async test "runner expands templates before transport and evaluates checks" {
