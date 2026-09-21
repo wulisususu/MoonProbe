@@ -13,6 +13,9 @@ impl @core.Transport for FakeTransport with fn execute(
 }
 
 ///|
+extend FakeTransport with @core.Transport::{execute}
+
+///|
 async test "runner expands templates before transport and evaluates checks" {
   let request : @core.Request = {
     name: "Get user",
