@@ -1,6 +1,6 @@
 # MoonProbe 公共 API 设计
 
-> 当前实现状态：Core Models、模板展开、Assertion Engine、Transport、单请求 Runner、Collection Runner 与 Report 已实现。CLI 属于下一 Gate。
+> 当前实现状态：Core Models、模板展开、Assertion Engine、Transport、单请求 Runner、Collection Runner、Report 与 Native CLI 已实现。
 
 ## Request
 
@@ -174,6 +174,41 @@ moonprobe.collection-report.v1
 ```
 
 这样 CLI、CI、Web Demo 或其他工具可以复用同一执行结果，而无需把格式化逻辑塞回 Core。
+
+## CLI Adapter
+
+CLI 位于独立 `cli/` 包，解析 JSON 文件后只负责组装已经存在的公共能力：
+
+```text
+argv / JSON files
+      ↓
+cli parser
+      ↓
+Core Request / Collection / Environment
+      ↓
+HttpTransport + run_collection
+      ↓
+CollectionResult
+      ↓
+Text / JSON Reporter
+```
+
+`send` 会把一个 Request 包装成单项 Collection，因此 CLI 不维护第二套执行/报告逻辑。
+
+支持：
+
+```text
+moonprobe send <request.json> [--env <env.json>] [--format text|json]
+moonprobe run  <collection.json> [--env <env.json>] [--format text|json]
+```
+
+退出码契约：
+
+- 0：执行并通过；
+- 1：执行完成但请求/断言失败；
+- 2：参数、输入文件或配置错误。
+
+Wire JSON schema 属于 CLI Adapter，而不是 Core 公共数据模型，避免把文件格式约束扩散到基础库。
 
 ## API 设计原则
 

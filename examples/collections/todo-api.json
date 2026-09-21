@@ -1,0 +1,27 @@
+{
+  "name": "Todo API",
+  "stop_on_failure": true,
+  "requests": [
+    {
+      "name": "List todos",
+      "method": "GET",
+      "url": "{{base_url}}/todos",
+      "assertions": [
+        { "type": "status_is", "expected": 200 }
+      ]
+    },
+    {
+      "name": "Create todo",
+      "method": "POST",
+      "url": "{{base_url}}/todos",
+      "body": {
+        "title": "MoonProbe",
+        "completed": false
+      },
+      "assertions": [
+        { "type": "status_between", "min": 200, "max": 299 },
+        { "type": "json_exists", "path": "$.id" }
+      ]
+    }
+  ]
+}
