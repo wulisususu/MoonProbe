@@ -45,19 +45,21 @@ pub extend CliOutcome with @debug.Debug::{to_repr}
 
 ///|
 pub fn usage() -> String {
-  #|MoonProbe
-  #|
-  #|Usage:
-  #|  moonprobe send <request.json> [--env <env.json>] [--format text|json]
-  #|  moonprobe run <collection.json> [--env <env.json>] [--format text|json]
-  #|  moonprobe --help
-  #|  moonprobe --version
-  #|
-  #|Exit codes:
-  #|  0  all requests/assertions passed
-  #|  1  request or collection executed but failed
-  #|  2  invalid CLI arguments, input files, or configuration
-  #|
+  (
+    #|MoonProbe
+    #|
+    #|Usage:
+    #|  moonprobe send <request.json> [--env <env.json>] [--format text|json]
+    #|  moonprobe run <collection.json> [--env <env.json>] [--format text|json]
+    #|  moonprobe --help
+    #|  moonprobe --version
+    #|
+    #|Exit codes:
+    #|  0  all requests/assertions passed
+    #|  1  request or collection executed but failed
+    #|  2  invalid CLI arguments, input files, or configuration
+    #|
+  )
 }
 
 ///|
