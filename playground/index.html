@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="MoonProbe — MoonBit-native API debugging and automated testing playground." />
-  <title>MoonProbe Playground</title>
+  <meta name="description" content="MoonProbe — 基于 MoonBit 的 API 调试与自动化测试演示平台。" />
+  <title>MoonProbe · API 调试与测试</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -13,73 +13,73 @@
       <div class="logo-mark">MP</div>
       <div>
         <h1>MoonProbe</h1>
-        <p>API Debugging & Testing, powered by MoonBit</p>
+        <p>API 调试与自动化测试 · Powered by MoonBit</p>
       </div>
     </div>
-    <div class="runtime-badge"><span></span> MoonBit Core · Browser Fetch Adapter</div>
+    <div class="runtime-badge"><span></span> MoonBit Core · 浏览器适配层</div>
   </header>
 
   <main class="workspace">
     <aside class="sidebar panel">
       <div class="panel-head">
         <div>
-          <p class="eyebrow">COLLECTION</p>
-          <h2>Todo API</h2>
+          <p class="eyebrow">API 集合 · COLLECTION</p>
+          <h2>Todo API 示例</h2>
         </div>
-        <button id="runCollection" class="secondary">Run all</button>
+        <button id="runCollection" class="secondary">运行全部</button>
       </div>
-      <p class="hint">CORS-friendly public demo. Requests run in declaration order.</p>
+      <p class="hint">公开演示接口支持 CORS，请求会按列表顺序执行。</p>
       <nav id="requestList" class="request-list"></nav>
       <div class="env-card">
-        <label for="baseUrl">Environment · base_url</label>
+        <label for="baseUrl">环境变量 · base_url</label>
         <input id="baseUrl" value="https://jsonplaceholder.typicode.com" />
       </div>
       <div class="architecture-note">
-        <strong>Same contracts as CLI</strong>
-        <span>JSON input → MoonBit template/assertions/report → browser fetch IO</span>
+        <strong>与 CLI 共用同一套 MoonBit 规则</strong>
+        <span>JSON 输入 → MoonBit 模板/断言/报告 → 浏览器网络请求</span>
       </div>
     </aside>
 
     <section class="editor panel">
       <div class="request-bar">
-        <select id="method" aria-label="HTTP method">
+        <select id="method" aria-label="HTTP 请求方法">
           <option>GET</option><option>POST</option><option>PUT</option>
           <option>PATCH</option><option>DELETE</option>
         </select>
-        <input id="url" aria-label="Request URL" />
-        <button id="send" class="primary">Send</button>
+        <input id="url" aria-label="请求 URL" />
+        <button id="send" class="primary">发送请求</button>
       </div>
 
       <div class="tabs" role="tablist">
-        <button class="tab active" data-tab="body">Body</button>
-        <button class="tab" data-tab="headers">Headers</button>
-        <button class="tab" data-tab="query">Params</button>
-        <button class="tab" data-tab="auth">Auth</button>
-        <button class="tab" data-tab="tests">Tests</button>
+        <button class="tab active" data-tab="body">请求体 Body</button>
+        <button class="tab" data-tab="headers">请求头 Headers</button>
+        <button class="tab" data-tab="query">参数 Params</button>
+        <button class="tab" data-tab="auth">认证 Auth</button>
+        <button class="tab" data-tab="tests">断言 Tests</button>
       </div>
 
       <div class="tab-panels">
-        <div class="tab-panel active" data-panel="body"><label>JSON / text body</label><textarea id="body" spellcheck="false"></textarea></div>
-        <div class="tab-panel" data-panel="headers"><label>Headers · JSON array</label><textarea id="headers" spellcheck="false"></textarea></div>
-        <div class="tab-panel" data-panel="query"><label>Query params · JSON array</label><textarea id="query" spellcheck="false"></textarea></div>
-        <div class="tab-panel" data-panel="auth"><label>Auth · JSON object</label><textarea id="auth" spellcheck="false"></textarea></div>
-        <div class="tab-panel" data-panel="tests"><label>Assertions · JSON array</label><textarea id="tests" spellcheck="false"></textarea></div>
+        <div class="tab-panel active" data-panel="body"><label>JSON / 文本请求体</label><textarea id="body" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="headers"><label>请求头 Headers · JSON 数组</label><textarea id="headers" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="query"><label>查询参数 Query · JSON 数组</label><textarea id="query" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="auth"><label>认证 Auth · JSON 对象</label><textarea id="auth" spellcheck="false"></textarea></div>
+        <div class="tab-panel" data-panel="tests"><label>断言 Assertions · JSON 数组</label><textarea id="tests" spellcheck="false"></textarea></div>
       </div>
 
       <div class="core-strip">
-        <span>MoonBit path</span>
+        <span>MoonBit 执行链路</span>
         <code>wire.parse → core.render_request → fetch → core.evaluate_assertions → report.v1</code>
       </div>
     </section>
 
     <section class="response panel">
       <div class="panel-head response-head">
-        <div><p class="eyebrow">RESPONSE</p><h2 id="responseTitle">Ready</h2></div>
+        <div><p class="eyebrow">响应 · RESPONSE</p><h2 id="responseTitle">等待发送</h2></div>
         <div id="metrics" class="metrics"></div>
       </div>
-      <pre id="responseBody" class="response-body">Select a request and press Send.</pre>
+      <pre id="responseBody" class="response-body">选择一个请求，然后点击“发送请求”。</pre>
       <div class="assertion-section">
-        <div class="assertion-title"><h3>Assertions</h3><span id="assertionSummary">—</span></div>
+        <div class="assertion-title"><h3>断言结果 Assertions</h3><span id="assertionSummary">—</span></div>
         <div id="assertions" class="assertions"></div>
       </div>
     </section>
@@ -87,17 +87,17 @@
 
   <section class="collection-results panel">
     <div class="panel-head">
-      <div><p class="eyebrow">COLLECTION RUN</p><h2>Regression results</h2></div>
-      <div id="collectionSummary" class="summary-pill">Not run</div>
+      <div><p class="eyebrow">集合运行 · COLLECTION RUN</p><h2>回归测试结果</h2></div>
+      <div id="collectionSummary" class="summary-pill">尚未运行</div>
     </div>
     <div id="collectionRows" class="collection-rows">
-      <div class="empty-state">Run the Todo API collection to see ordered request results.</div>
+      <div class="empty-state">点击“运行全部”，查看 Todo API 的顺序执行结果。</div>
     </div>
   </section>
 
   <footer>
-    <span>Browser networking is subject to CORS. Native CLI remains the unrestricted transport.</span>
-    <a href="https://github.com/wulisususu/MoonProbe">GitHub repository</a>
+    <span>浏览器请求受 CORS 限制；Native CLI 可用于不受浏览器限制的真实 API 调试。</span>
+    <a href="https://github.com/wulisususu/MoonProbe">GitHub 项目仓库</a>
   </footer>
 
   <script type="module" src="./app.js"></script>
